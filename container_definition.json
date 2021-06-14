@@ -1,0 +1,40 @@
+{
+  "image": "rushyendra/myimages:nodejsapp1",
+  "name": "project-container",
+  "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-region" : "us-east-2",
+                    "awslogs-group" : "stream-to-log-fluentd",
+                    "awslogs-stream-prefix" : "project"
+                }
+            },
+  "portMappings" : [{
+          "containerPort" : "80",
+          "hostPort"      : "3000"
+           }   ],
+
+  "command" : ["sleep", "10"],
+  "run" : ["npm install"],
+  "copy" : ["./nodejsdemo/index.js","/home/node/app"],
+
+  "environment": [
+            {
+                "name": "DB_PASSWORD",
+                "value": "${var.bucket_name}"
+            },
+
+            {
+                "name": "DB_NAME",
+                "value": "testdb"
+            },
+            {
+                "name": "DB_USER",
+                "value": "ADMIN"
+            },
+            {
+                "name": "DB_HOST",
+                "value": "default.db_endpoint"
+            }
+        ]
+}
